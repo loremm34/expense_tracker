@@ -21,7 +21,7 @@ class _Expenses extends State<Expenses> {
     Expense(
         title: "Bebra2",
         amount: 0,
-        date: DateTime(2023,  2, 11),
+        date: DateTime.now(),
         category: Category.work)
   ];
   @override
