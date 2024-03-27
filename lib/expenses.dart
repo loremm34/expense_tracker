@@ -27,9 +27,19 @@ class _Expenses extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Expense Tracker App"),
+        actions: [
+          SizedBox(width: 8,),
+          IconButton(onPressed: () {}, icon: Icon(Icons.add))
+        ],
+      ),
       body: Column(
-        children: [Text("Flutter Expense Tracker"), 
-        Expanded(child: ExpensesList(expenses: _registeredExpensese))],
+        children: [
+          Expanded(
+            child: ExpensesList(expenses: _registeredExpensese),
+          ),
+        ],
       ),
     );
   }
