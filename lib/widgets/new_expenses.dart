@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expense_tracker/models/expense.dart';
 
 class NewExpenses extends StatefulWidget {
   const NewExpenses({super.key});
@@ -15,8 +16,11 @@ class _NewExpenses extends State<NewExpenses> {
   //   _enteredTitle = inputValue;
   // }
 
-  var _titleController = TextEditingController();
-  var _amountController = TextEditingController();
+  // controllers
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime? _selectedDate;
+  var _selectedCategory = Category.work;
 
   @override
   void dispose() {
@@ -29,11 +33,16 @@ class _NewExpenses extends State<NewExpenses> {
     Navigator.pop(context);
   }
 
-  void _presentDatePicker() {
+  // Date picker organizer
+  void _presentDatePicker() async {
     final now = DateTime.now();
-    final firstDate = DateTime(now.year - 1, now.month, now.day);
-    final lastDate = DateTime(now.year + 2000, now.month, now.day);
-    showDatePicker(context: context, firstDate: firstDate, lastDate: lastDate);
+    final firstDate = DateTime(now.year - 2, now.month, now.day);
+    final lastDate = DateTime(now.year + 2, now.month, now.day);
+    final pickedDate = await showDatePicker(
+        context: context, firstDate: firstDate, lastDate: lastDate);
+    setState(() {
+      _selectedDate = pickedDate;
+    });
   }
 
   @override
@@ -64,27 +73,51 @@ class _NewExpenses extends State<NewExpenses> {
                 width: 16,
               ),
               Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text("Select date"),
-                  IconButton(
-                      onPressed: _presentDatePicker,
-                      icon: const Icon(Icons.date_range))
-                ],
-              ))
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _selectedDate == null
+                          ? "No date selected"
+                          : formatter.format(_selectedDate!),
+                    ),
+                    IconButton(
+                        onPressed: _presentDatePicker,
+                        icon: const Icon(Icons.date_range))
+                  ],
+                ),
+              )
             ],
           ),
+          SizedBox(height: 16,),
           Row(
             children: [
+              DropdownButton(
+                value: _selectedCategory,
+                  items: Category.values
+                      .map(
+                        (category) => DropdownMenuItem(
+                          value: category,
+                          child: Text(category.name.toUpperCase()),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _selectedCategory = value;
+                    });
+                  }),
+                  const Spacer(),
               ElevatedButton(
                   onPressed: () {
                     print(_titleController.text);
                     print(_amountController.text);
                   },
                   child: const Text("Save Title")),
-              const Spacer(),
               TextButton(
                   onPressed: () {
                     closeModalSheet(context);

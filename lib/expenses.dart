@@ -39,10 +39,10 @@ class _Expenses extends State<Expenses> {
       appBar: AppBar(
         title: Text("Expense Tracker App"),
         actions: [
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
-          IconButton(onPressed: _openAddModalSheet, icon: Icon(Icons.add))
+          IconButton(onPressed: _openAddModalSheet, icon: const Icon(Icons.add))
         ],
       ),
       body: Column(
