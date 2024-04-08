@@ -48,8 +48,38 @@ class _NewExpenses extends State<NewExpenses> {
   void submitExpenseData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount < 0;
-    if(_titleController.text.trim().isEmpty || amountIsInvalid || _selectedDate == null) {
-      //
+    if (
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"))
+          ],
+          title: Text("Amount Error"),
+          content: Text("Pls type correct amount or select date"),
+        ),
+      );
+    } else if(_titleController.text.trim().isEmpty) {
+       showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"))
+          ],
+          title: const Text("Title Erroe"),
+          content: const Text("Pls type correct title"),
+        ),
+      );
     }
   }
 
@@ -98,11 +128,13 @@ class _NewExpenses extends State<NewExpenses> {
               )
             ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Row(
             children: [
               DropdownButton(
-                value: _selectedCategory,
+                  value: _selectedCategory,
                   items: Category.values
                       .map(
                         (category) => DropdownMenuItem(
@@ -119,7 +151,7 @@ class _NewExpenses extends State<NewExpenses> {
                       _selectedCategory = value;
                     });
                   }),
-                  const Spacer(),
+              const Spacer(),
               ElevatedButton(
                   onPressed: submitExpenseData,
                   child: const Text("Save Title")),
