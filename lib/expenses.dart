@@ -6,6 +6,7 @@ import "package:expense_tracker/models/expense.dart";
 class Expenses extends StatefulWidget {
   Expenses({super.key});
 
+
   @override
   State<Expenses> createState() {
     return _Expenses();
@@ -29,15 +30,22 @@ class _Expenses extends State<Expenses> {
   void _openAddModalSheet() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => NewExpenses(),
+      builder: (ctx) => NewExpenses(onAddExpense: _addExpenses),
     );
+  }
+
+  void _addExpenses(Expense expenses) {
+    setState(() {
+      _registeredExpensese.add(expenses);
+    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Expense Tracker App"),
+        title: const Text("Expense Tracker App"),
         actions: [
           const SizedBox(
             width: 8,
