@@ -41,13 +41,34 @@ class _Expenses extends State<Expenses> {
   }
 
   void _removeExpenses(Expense expenses) {
+    final expensesIndex = _registeredExpensese.indexOf(expenses);
     setState(() {
       _registeredExpensese.remove(expenses);
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Expense deleted"),
+      duration: const Duration(seconds: 3),
+      action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              _registeredExpensese.insert(expensesIndex, expenses);
+            });
+          }),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent =
+        const Center(child: Text("Try to add some new expenses!"));
+    if (_registeredExpensese.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpensese,
+        onRemoveExpense: _removeExpenses,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Expense Tracker App"),
@@ -60,12 +81,7 @@ class _Expenses extends State<Expenses> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ExpensesList(
-              expenses: _registeredExpensese,
-              onRemoveExpense: _removeExpenses,
-            ),
-          ),
+          Expanded(child: mainContent),
         ],
       ),
     );
