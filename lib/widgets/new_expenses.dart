@@ -50,22 +50,9 @@ class _NewExpenses extends State<NewExpenses> {
   void submitExpenseData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount < 0;
-    if (amountIsInvalid || _selectedDate == null) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("OK"))
-          ],
-          title: Text("Amount Error"),
-          content: Text("Pls type correct amount or select date"),
-        ),
-      );
-    } else if (_titleController.text.trim().isEmpty) {
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -76,20 +63,20 @@ class _NewExpenses extends State<NewExpenses> {
                 },
                 child: const Text("OK"))
           ],
-          title: const Text("Title Erroe"),
-          content: const Text("Pls type correct title"),
+          title: const Text("Error"),
+          content: const Text("Pls type correct data"),
         ),
       );
-    } else {
-      widget.onAddExpense(Expense(
-          title: _titleController.text,
-          amount: enteredAmount,
-          date: _selectedDate!,
-          category: _selectedCategory));
+      return;
     }
+    widget.onAddExpense(Expense(
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory));
     Navigator.pop(context);
   }
-
+    
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -160,13 +147,15 @@ class _NewExpenses extends State<NewExpenses> {
                   }),
               const Spacer(),
               ElevatedButton(
-                  onPressed: submitExpenseData,
-                  child: const Text("Save Title")),
+                onPressed: submitExpenseData,
+                child: const Text("Save Title"),
+              ),
               TextButton(
-                  onPressed: () {
-                    closeModalSheet(context);
-                  },
-                  child: const Text("Cancel"))
+                onPressed: () {
+                  closeModalSheet(context);
+                },
+                child: const Text("Cancel"),
+              )
             ],
           )
         ],

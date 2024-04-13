@@ -6,7 +6,6 @@ import "package:expense_tracker/models/expense.dart";
 class Expenses extends StatefulWidget {
   Expenses({super.key});
 
-
   @override
   State<Expenses> createState() {
     return _Expenses();
@@ -29,7 +28,7 @@ class _Expenses extends State<Expenses> {
 
   void _openAddModalSheet() {
     showModalBottomSheet(
-      isScrollControlled: true,
+      // isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpenses(onAddExpense: _addExpenses),
     );
@@ -39,7 +38,12 @@ class _Expenses extends State<Expenses> {
     setState(() {
       _registeredExpensese.add(expenses);
     });
-    
+  }
+
+  void _removeExpenses(Expense expenses) {
+    setState(() {
+      _registeredExpensese.remove(expenses);
+    });
   }
 
   @override
@@ -57,7 +61,10 @@ class _Expenses extends State<Expenses> {
       body: Column(
         children: [
           Expanded(
-            child: ExpensesList(expenses: _registeredExpensese),
+            child: ExpensesList(
+              expenses: _registeredExpensese,
+              onRemoveExpense: _removeExpenses,
+            ),
           ),
         ],
       ),
