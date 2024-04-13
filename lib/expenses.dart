@@ -46,17 +46,19 @@ class _Expenses extends State<Expenses> {
       _registeredExpensese.remove(expenses);
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text("Expense deleted"),
-      duration: const Duration(seconds: 3),
-      action: SnackBarAction(
-          label: "Undo",
-          onPressed: () {
-            setState(() {
-              _registeredExpensese.insert(expensesIndex, expenses);
-            });
-          }),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text("Expense deleted"),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+            label: "Undo",
+            onPressed: () {
+              setState(() {
+                _registeredExpensese.insert(expensesIndex, expenses);
+              });
+            }),
+      ),
+    );
   }
 
   @override
@@ -76,7 +78,7 @@ class _Expenses extends State<Expenses> {
           const SizedBox(
             width: 8,
           ),
-          IconButton(onPressed: _openAddModalSheet, icon: const Icon(Icons.add))
+          IconButton(onPressed: _openAddModalSheet, icon: const Icon(Icons.add), color: Colors.white,)
         ],
       ),
       body: Column(

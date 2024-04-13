@@ -21,7 +21,7 @@ class _NewExpenses extends State<NewExpenses> {
   // controllers
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime? _selectedDate;
+  DateTime? _selectedDate = DateTime.now();
   var _selectedCategory = Category.work;
 
   @override
@@ -76,7 +76,7 @@ class _NewExpenses extends State<NewExpenses> {
         category: _selectedCategory));
     Navigator.pop(context);
   }
-    
+
   @override
   Widget build(BuildContext context) {
     return Padding(
