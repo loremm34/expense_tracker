@@ -13,14 +13,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-            colorScheme: kColorScheme,
-            useMaterial3: true,
-            appBarTheme: AppBarTheme()
-                .copyWith(backgroundColor: kColorScheme.onPrimaryContainer,
-                foregroundColor: kColorScheme.onPrimaryContainer,
-                titleTextStyle: TextStyle(color: Colors.white, fontSize: 25))),
-        debugShowCheckedModeBanner: false,
-        home: Expenses());
+      theme: ThemeData(
+        colorScheme: kColorScheme,
+        cardTheme: const CardTheme(
+          surfaceTintColor: Color.fromARGB(255, 156, 53, 120),
+        ),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.onPrimaryContainer,
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25),
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const Expenses(),
+    );
   }
 }
