@@ -15,8 +15,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: kColorScheme,
-        cardTheme: const CardTheme(
-          surfaceTintColor: Color.fromARGB(255, 156, 53, 120),
+        cardTheme: CardTheme(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+        ),
+        textTheme: ThemeData().textTheme.copyWith(
+          titleLarge: TextStyle(fontWeight: FontWeight.normal, fontSize: 10 )
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: kColorScheme.primaryContainer),
         ),
         useMaterial3: true,
         appBarTheme: const AppBarTheme().copyWith(
