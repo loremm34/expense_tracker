@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
+        snackBarTheme: const SnackBarThemeData(
+          backgroundColor: Color.fromARGB(255, 36, 34, 34),
+          contentTextStyle: TextStyle(color: Colors.white)
+          
+        ),
         cardTheme: const CardTheme(
           color: Color.fromARGB(255, 48, 99, 151),
           margin: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
@@ -37,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: ThemeData().textTheme.copyWith(
             titleLarge:
-                const TextStyle(fontWeight: FontWeight.normal, fontSize: 10)),
+                const TextStyle(fontWeight: FontWeight.normal, fontSize: 24)),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               backgroundColor: kColorScheme.primaryContainer),

@@ -50,9 +50,7 @@ class _NewExpenses extends State<NewExpenses> {
   void submitExpenseData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount < 0;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _selectedDate == null) {
+     if (_titleController.text.trim().isEmpty || _selectedDate == null) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -64,11 +62,30 @@ class _NewExpenses extends State<NewExpenses> {
                 child: const Text("OK"))
           ],
           title: const Text("Error"),
-          content: const Text("Pls type correct data"),
+          content: const Text("Title field is empty"),
         ),
       );
       return;
     }
+    
+    if (amountIsInvalid) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"))
+          ],
+          title: const Text("Error"),
+          content: const Text("Amount shoud be a number"),
+        ),
+      );
+      return;
+    }
+   
     widget.onAddExpense(Expense(
         title: _titleController.text,
         amount: enteredAmount,
@@ -122,7 +139,7 @@ class _NewExpenses extends State<NewExpenses> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Row(
