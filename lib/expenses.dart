@@ -19,11 +19,6 @@ class _Expenses extends State<Expenses> {
         amount: 43.243,
         date: DateTime.now(),
         category: Category.food),
-    Expense(
-        title: "Bebra2",
-        amount: 0,
-        date: DateTime.now(),
-        category: Category.work)
   ];
 
   void _openAddModalSheet() {

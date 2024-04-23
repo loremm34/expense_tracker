@@ -37,6 +37,7 @@ class Expense {
   String get formattedDate {
     return formatter.format(date);
   }
+
 }
 
 class ExpenseBucket {
